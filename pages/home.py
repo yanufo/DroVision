@@ -2,12 +2,10 @@ import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 
-from sql_tool.queries import get_all_reports
 from ui.drone_model import display_3d_drone
 from ui.upload import show_new_report
 from ui.usagi_model import display_3d_usagi
 from ui.drone_model import display_3d_drone
-import base64
 
 # ============================================================
 # Hide Streamlit Deploy button

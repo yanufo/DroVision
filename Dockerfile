@@ -5,7 +5,7 @@ FROM python:3.12.3 AS builder
 
 WORKDIR /build
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \                                                                                                                       
     build-essential \
     curl \
     git \
@@ -13,8 +13,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone application
-# RUN git clone https://github.com/yanufo/RoW-App.git .
-RUN git clone --branch v0-row-only https://github.com/yanufo/RoW-App.git .
+RUN git clone https://github.com/yanufo/DroVision.git .
 
 COPY requirements.txt .
 

@@ -29,13 +29,6 @@ st.title("Inspection Report Generation")
 
 show_new_report()
 
-# ============================================================
-# 3D King Usagi Viewer
-# ============================================================
-
-# display_3d_usagi()
-
-
 
 # ============================================================
 # 3D Drone Viewer
@@ -44,41 +37,9 @@ show_new_report()
 display_3d_drone()
 
 
-# # ============================================================
-# # Database
-# # ============================================================
+# ============================================================
+# 3D King Usagi Viewer
+# ============================================================
 
-# db_report = get_all_reports()
-
-# df = pd.DataFrame(db_report)
-
-
-# # ============================================================
-# # Session State
-# # ============================================================
-
-# if "popover_open" not in st.session_state:
-#     st.session_state.popover_open = False
-
-# if "confirm_cancel" not in st.session_state:
-#     st.session_state.confirm_cancel = False
-
-
-# # ============================================================
-# # UAV IDs
-# # ============================================================
-
-# if not df.empty and "uav_id" in df.columns:
-
-#     uav_ids = sorted(
-#         df["uav_id"]
-#         .dropna()
-#         .unique()
-#         .tolist()
-#     )
-
-# else:
-
-#     uav_ids = []
-
+# display_3d_usagi()
 

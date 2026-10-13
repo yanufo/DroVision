@@ -12,7 +12,7 @@ import base64
 # ============================================================
 # Hide Streamlit Deploy button
 # ============================================================
-
+# region Hide Deploy Button
 st.markdown("""
 <style>
 [data-testid="stAppDeployButton"] {
@@ -21,14 +21,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# endregion
 
 # ============================================================
 # New Report
 # ============================================================
+# region New Report
 st.title("Inspection Report Generation")
 
 show_new_report()
 
+# endregion
 
 # ============================================================
 # 3D Drone Viewer

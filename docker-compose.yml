@@ -10,9 +10,9 @@ services:
     volumes:
       - /home:/home
       - /data:/data
-      - /inspection:/inspection
-      - /home/gve/Downloads/row_inspection_renew/models:/models
-      - /inspection/config.yml:/inspection/config.yml
+      # - /inspection:/inspection
+      # - /home/gve/Downloads/row_inspection_renew/models:/models
+      # - /inspection/config.yml:/inspection/config.yml
 
     env_file:
       - .env

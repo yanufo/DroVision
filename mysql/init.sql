@@ -1,3 +1,8 @@
+-- Create database if not exists
+CREATE DATABASE IF NOT EXISTS row_database;
+
+USE row_database;
+
 -- Table to store all relevant information for report list display on the app
 
 CREATE TABLE IF NOT EXISTS reports (
@@ -44,4 +49,3 @@ CREATE TABLE IF NOT EXISTS solar_report_files (
     video_path VARCHAR(250) NOT NULL,
     FOREIGN KEY (report_id) REFERENCES solar_reports(id)
 );
-

@@ -7,6 +7,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     curl \
+    default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # =========================
@@ -16,6 +17,13 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+# =========================
+# Wait for MySQL script
+# =========================
+
+COPY docker/wait-for-mysql.sh /wait-for-mysql.sh
+RUN chmod +x /wait-for-mysql.sh
 
 # =========================
 # 3D Models
@@ -62,6 +70,12 @@ COPY sql_tool /app/sql_tool
 COPY services /app/services
 
 # =========================
+# Database initialization
+# =========================
+
+COPY mysql/init.sql /docker-entrypoint-initdb.d/init.sql
+
+# =========================
 # Package markers
 # =========================
 
@@ -82,4 +96,4 @@ HEALTHCHECK \
     --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-ENTRYPOINT ["streamlit", "run", "/app/app_prototype.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app_prototype.py", "--server.port=8501", "--server.address=0.0.0.0"]

@@ -26,49 +26,6 @@ with open("/inspection/config.yml", "r") as f:
     config = yaml.safe_load(f)
 
 
-# def trigger_airflow_dag(filename, inspection_type="row"):
-#     # """Trigger the EGATWorkflowPipeline DAG with the given inspection subfolder."""
-#     # airflow_url = os.getenv("AIRFLOW_URL", "http://172.25.0.1:8082")
-#     # # airflow_url = os.getenv("AIRFLOW_URL", "http://airflow-webserver:8080")
-#     # airflow_user = os.getenv("AIRFLOW_API_USER", "airflow")
-#     # airflow_pass = os.getenv("AIRFLOW_API_PASSWORD", "airflow")
-    
-#     dag_id = "EGATWorkflowPipeline"
-    
-#     # Determine the monitored path and workflow based on inspection type
-#     if inspection_type == "solar":
-#         monitored_path = "/data/EGAT/inspections/solar"
-#         workflow = 2  # Solar workflow
-#     else:
-#         monitored_path = "/data/EGAT/inspections/row"
-#         workflow = 1  # Row workflow
-    
-#     payload = {
-#         # "dag_run_id": f"manual-{filename}-{int(timezone.utc.now().timestamp())}", dun work
-#         "dag_run_id": f"manual-{filename}-{int(datetime.now(timezone.utc).timestamp())}",
-#         # "dag_run_id": f"manual-{filename}-1760000000",
-#         "conf": {
-#             "MonitoredPath": monitored_path,
-#             "InspectionSubfolder": filename,
-#             "Workflow": workflow
-#         }
-#     }
-    
-#     try:
-#         response = requests.post(
-#             f"{airflow_url}/api/v1/dags/{dag_id}/dagRuns",
-#             auth=(airflow_user, airflow_pass),
-#             json=payload,
-#             timeout=10
-#         )
-        
-#         if response.status_code == 200:
-#             return True, response.json().get("dag_run_id")
-#         else:
-#             return False, f"HTTP {response.status_code}: {response.text}"
-#     except Exception as e:
-#         return False, str(e)
-
 
 # ==================================================
 # UPLOAD DIALOG
@@ -359,21 +316,6 @@ def new_report_dialog():
             with open(dropbox_path, "w"):
                 pass
 
-            # # --------------------------------------------------
-            # # Trigger Airflow DAG
-            # # --------------------------------------------------
-
-            # success, result = trigger_airflow_dag(filename, inspection_type="row")
-
-            # if success:
-            #     st.success(
-            #         f"Report '{filename}' created. Airflow DAG triggered: {result}"
-            #     )
-            # else:
-            #     st.warning(
-            #         f"Report '{filename}' created, but Airflow DAG trigger failed: {result}"
-            #     )
-
             # --------------------------------------------------
             # Reset form
             # --------------------------------------------------
@@ -536,19 +478,6 @@ def solar_inspection_page():
             return
 
         # --------------------------------------------------
-        # Add files to input
-        # --------------------------------------------------
-
-        # add_files_to_input(
-        #     config["directories"]["input"],
-        #     [
-        #         uploaded_video,
-        #         uploaded_srt,
-        #     ],
-        #     filename,
-        # )
-
-        # --------------------------------------------------
         # Create database record
         # --------------------------------------------------
 
@@ -597,21 +526,6 @@ def solar_inspection_page():
 
         with open(dropbox_path, "w"):
             pass
-
-        # --------------------------------------------------
-        # Trigger Airflow DAG
-        # --------------------------------------------------
-
-        # success, result = trigger_airflow_dag(filename, inspection_type="solar")
-
-        # if success:
-        #     st.success(
-        #         f"Report '{filename}' created. Airflow DAG triggered: {result}"
-        #     )
-        # else:
-        #     st.warning(
-        #         f"Report '{filename}' created, but Airflow DAG trigger failed: {result}"
-        #     )
 
         # --------------------------------------------------
         # Reset form

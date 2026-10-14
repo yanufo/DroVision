@@ -123,15 +123,6 @@ def preview_dialog(report_id):
             with open(html_path, "rb") as f:
                 html_bytes = f.read()
 
-            # components.html(
-            #     html_bytes.decode(
-            #         "utf-8",
-            #         errors="replace",
-            #     ),
-            #     height=550,
-            #     scrolling=True,
-            # )
-
             html_content = html_bytes.decode(
                 "utf-8",
                 errors="replace",

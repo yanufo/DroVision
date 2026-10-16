@@ -7,7 +7,7 @@ def display_3d_drone(
     height: int = 520,
     target_size: float = 9,
 ):
-    OBJ_PATH = "/app/models/drone_costum.obj"
+    OBJ_PATH = "/app/assets/models/drone_custom.obj"
 
     with open(OBJ_PATH, "rb") as f:
         obj_base64 = base64.b64encode(f.read()).decode("utf-8")

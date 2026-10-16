@@ -121,10 +121,10 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 
 # =========================
-# 3D Models
+# Application assets
 # =========================
 
-COPY --from=builder /build/models /app/models
+COPY --from=builder /build/assets /app/assets
 
 
 # =========================
@@ -136,13 +136,6 @@ COPY --from=builder /build/app_prototype.py /app/app_prototype.py
 COPY --from=builder /build/pages /app/pages
 
 COPY --from=builder /build/.streamlit /app/.streamlit
-
-
-# =========================
-# Application assets
-# =========================
-
-COPY --from=builder /build/images /app/images
 
 
 # =========================

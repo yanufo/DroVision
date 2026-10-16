@@ -13,9 +13,6 @@ services:
       - /data:/data
       - /inspection:/inspection
       
-      # 3D Models
-      # - /home/gve/Downloads/row_inspection_renew/models:/app/models:roonfig/c
-      
       # Runtime configuration files (mounted from config directory)
       - ./config/config.yml:/app/config/config.yml:ro
 

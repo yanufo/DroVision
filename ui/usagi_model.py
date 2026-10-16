@@ -22,7 +22,7 @@ def display_3d_usagi(
         Target size used to scale the model in the viewer.
     """
 
-    GLB_PATH = "/models/usagi.glb"
+    GLB_PATH = "/app/models/usagi.glb"
     glb_path = Path(GLB_PATH)
 
     # ============================================================

@@ -45,3 +45,9 @@ docs/
 
 # Other compose files
 docker-compose.*.yml
+
+# Config directory (contains sensitive files)
+config/
+
+# Script files (development only)
+scripts/

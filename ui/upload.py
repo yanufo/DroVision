@@ -22,7 +22,7 @@ from services.report_service import (
 )
 
 
-with open("/inspection/config.yml", "r") as f:
+with open("/app/config/config.yml", "r") as f:
     config = yaml.safe_load(f)
 
 

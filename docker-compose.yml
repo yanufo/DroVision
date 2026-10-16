@@ -8,16 +8,16 @@ services:
       - "8501:8501"
 
     volumes:
-      # Host directories (if needed)
+      # Host directories
       - /home:/home
       - /data:/data
       - /inspection:/inspection
       
       # 3D Models
-      - /home/gve/Downloads/row_inspection_renew/models:/app/models:ro
+      # - /home/gve/Downloads/row_inspection_renew/models:/app/models:roonfig/c
       
-      # Runtime configuration files (can be modified on-site without rebuild)
-      - ./config.yml:/app/config.yml:ro
+      # Runtime configuration files (mounted from config directory)
+      - ./config/config.yml:/app/config/config.yml:ro
 
     env_file:
       - .env
@@ -50,7 +50,7 @@ services:
 
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     networks:
       - airflow-network

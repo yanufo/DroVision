@@ -136,7 +136,7 @@ COPY --from=builder /build/assets /app/assets
 
 COPY --from=builder /build/app_prototype.py /app/app_prototype.py
 
-COPY --from=builder /build/pages /app/pages
+COPY --from=builder /build/src/pages /app/src/pages
 
 COPY --from=builder /build/.streamlit /app/.streamlit
 

@@ -18,20 +18,20 @@ st.sidebar.caption(f"Prototype v{__version__}")
 
 
 home = st.Page(
-    "pages/home.py",
+    "src/pages/home.py",
     title="Home",
     icon="🏠",
 )
 
 row_reports = st.Page(
-    "pages/Row_report.py",
+    "src/pages/Row_report.py",
     title="Right-of-Way Reports",
     icon="⚡️",
 )
 
 
 # solar_reports = st.Page(
-#     "pages/Solar_report.py",
+#     "src/pages/Solar_report.py",
 #     title="Solar Reports",
 #     icon="☀️",
 # )

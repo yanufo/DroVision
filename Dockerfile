@@ -1,4 +1,96 @@
 # =========================
+# Build stage
+# =========================
+FROM python:3.12.3 AS builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    patchelf \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy application source code and dependencies
+COPY . .
+
+# Install all application dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Nuitka
+RUN pip install --no-cache-dir nuitka
+
+
+# =========================
+# Compile application modules (protected source code)
+# =========================
+
+RUN mkdir -p /build/compiled/ui
+RUN mkdir -p /build/compiled/sql_tool
+RUN mkdir -p /build/compiled/services
+
+
+# -------------------------
+# UI
+# -------------------------
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/upload.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/download.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/ui_tools.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/preview.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/drone_model.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/ui \
+    ui/usagi_model.py
+
+
+# -------------------------
+# SQL
+# -------------------------
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/sql_tool \
+    sql_tool/connection.py
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/sql_tool \
+    sql_tool/queries.py
+
+
+# -------------------------
+# Services
+# -------------------------
+
+RUN python -m nuitka \
+    --module \
+    --output-dir=/build/compiled/services \
+    services/report_service.py
+
+
+# =========================
 # Runtime stage
 # =========================
 FROM python:3.12.3-slim
@@ -10,13 +102,6 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# =========================
-# Python dependencies
-# =========================
-
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
 
 # =========================
 # Wait for MySQL script
@@ -25,55 +110,67 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY docker/wait-for-mysql.sh /wait-for-mysql.sh
 RUN chmod +x /wait-for-mysql.sh
 
+
+# =========================
+# Python dependencies
+# =========================
+
+COPY --from=builder /build/requirements.txt /tmp/requirements.txt
+
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+
 # =========================
 # 3D Models
 # =========================
 
-COPY models /app/models
+COPY --from=builder /build/models /app/models
+
 
 # =========================
 # Streamlit entrypoint
 # =========================
 
-COPY app_prototype.py /app/app_prototype.py
+COPY --from=builder /build/app_prototype.py /app/app_prototype.py
 
-COPY pages /app/pages
+COPY --from=builder /build/pages /app/pages
 
-COPY .streamlit /app/.streamlit
+COPY --from=builder /build/.streamlit /app/.streamlit
+
 
 # =========================
 # Application assets
 # =========================
 
-COPY images /app/images
+COPY --from=builder /build/images /app/images
 
-RUN mkdir -p /app/inspection
-
-COPY inspection/config.yml /app/inspection/config.yml
 
 # =========================
-# UI modules
+# Compiled UI modules (protected)
 # =========================
 
-COPY ui /app/ui
+RUN mkdir -p /app/ui
+
+COPY --from=builder /build/compiled/ui/ /app/ui/
+
 
 # =========================
-# SQL modules
+# Compiled SQL modules (protected)
 # =========================
 
-COPY sql_tool /app/sql_tool
+RUN mkdir -p /app/sql_tool
+
+COPY --from=builder /build/compiled/sql_tool/ /app/sql_tool/
+
 
 # =========================
-# Services
+# Compiled services (protected)
 # =========================
 
-COPY services /app/services
+RUN mkdir -p /app/services
 
-# =========================
-# Database initialization
-# =========================
+COPY --from=builder /build/compiled/services/ /app/services/
 
-COPY mysql/init.sql /docker-entrypoint-initdb.d/init.sql
 
 # =========================
 # Package markers
@@ -82,6 +179,16 @@ COPY mysql/init.sql /docker-entrypoint-initdb.d/init.sql
 RUN touch /app/ui/__init__.py
 RUN touch /app/sql_tool/__init__.py
 RUN touch /app/services/__init__.py
+
+
+# =========================
+# Runtime Configuration Files (uncompiled - mounted via docker-compose)
+# =========================
+# The following files are NOT included in this image:
+# - config.yml: Application configuration paths
+# - .env: Environment variables (DB credentials, API URLs)
+# These are mounted at runtime to allow on-site modification without rebuild
+
 
 # =========================
 # Streamlit

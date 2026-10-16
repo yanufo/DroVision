@@ -1,18 +1,15 @@
 #!/bin/bash
 set -e
 
-host="$1"
-shift
-cmd="$@"
-
 echo "Waiting for MySQL to be ready..."
 
 # Wait for MySQL to be available
 attempt=0
 while true; do
     if mysqladmin ping -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" --silent 2>/dev/null; then
-        echo "MySQL is up - executing command"
-        exec $cmd
+        echo "MySQL is up - starting application"
+        # Execute the remaining arguments as the command
+        exec "$@"
     fi
     
     attempt=$((attempt + 1))

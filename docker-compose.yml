@@ -8,11 +8,16 @@ services:
       - "8501:8501"
 
     volumes:
+      # Host directories (if needed)
       - /home:/home
       - /data:/data
       - /inspection:/inspection
-      - /home/gve/Downloads/row_inspection_renew/models:/models
-      - /inspection/config.yml:/inspection/config.yml
+      
+      # 3D Models
+      - /home/gve/Downloads/row_inspection_renew/models:/app/models:ro
+      
+      # Runtime configuration files (can be modified on-site without rebuild)
+      - ./config.yml:/app/config.yml:ro
 
     env_file:
       - .env
@@ -30,7 +35,6 @@ services:
 
     networks:
       - airflow-network
-
 
 
   mysql:

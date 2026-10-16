@@ -1,0 +1,47 @@
+# Docker-specific
+.git
+.gitignore
+.dockerignore
+Dockerfile
+Dockerfile.*
+
+# Development
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Logs and temp files
+logs/
+*.log
+*.tmp
+
+# Database data
+mysql_data/
+
+# Backups
+backups/
+
+# Test files
+*.md
+test*
+tests/
+
+# Documentation
+docs/
+
+# Build artifacts (will be generated fresh)
+*.so
+*.nuitka
+
+# Other compose files
+docker-compose.*.yml

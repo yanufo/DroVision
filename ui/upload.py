@@ -15,7 +15,7 @@ from sql_tool.queries import (
     has_duplicate_report,
     has_processing_solar_report
 )
-from services.report_service import (
+from src.services.report_service import (
     # add_files_to_input,
     make_filename,
     make_solar_filename,
@@ -141,7 +141,7 @@ def new_report_dialog():
                 st.write('''
                     Safe clearance distance is the mandatory minimum distance from electrical line and people, buildings, trees, or equipment to stop electric shocks and arcing
                 ''')
-                st.image("images/safe_clear_distance_info.png")
+                st.image("assets/images/safe_clear_distance_info.png")
 
         with col2:
 

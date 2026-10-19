@@ -134,7 +134,7 @@ COPY --from=builder /build/assets /app/assets
 # Streamlit entrypoint
 # =========================
 
-COPY --from=builder /build/app_prototype.py /app/app_prototype.py
+COPY --from=builder /build/app.py /app/app.py
 
 COPY --from=builder /build/src/pages /app/src/pages
 
@@ -200,4 +200,4 @@ HEALTHCHECK \
     --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app_prototype.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

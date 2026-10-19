@@ -18,7 +18,7 @@ services:
       - ./config/config.yml:/app/config/config.yml:ro
 
     env_file:
-      - .env
+      - ./config/.env
 
     depends_on:
       mysql:
@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
 
     env_file:
-      - .env
+      - ./config/.env
 
     ports:
       - "3307:3306"

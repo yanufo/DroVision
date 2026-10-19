@@ -114,14 +114,6 @@ RUN apt-get update && apt-get install -y \
 
 
 # =========================
-# Wait for MySQL script
-# =========================
-
-COPY docker/wait-for-mysql.sh /wait-for-mysql.sh
-RUN chmod +x /wait-for-mysql.sh
-
-
-# =========================
 # Python dependencies
 # =========================
 
@@ -207,5 +199,4 @@ HEALTHCHECK \
     --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-# ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
 ENTRYPOINT ["streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

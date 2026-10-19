@@ -12,7 +12,7 @@ services:
       # Host directories
       - /home:/home
       - /data:/data
-      - /inspection:/inspection
+      # - /inspection:/inspection
       
       # Runtime configuration files (mounted from config directory)
       - ./config/config.yml:/app/config/config.yml:ro
@@ -20,18 +20,9 @@ services:
     env_file:
       - .env
 
-    environment:
-      - AIRFLOW_URL=http://host.docker.internal:8083
-      - AIRFLOW_API_USER=airflow
-      - AIRFLOW_API_PASSWORD=airflow
-
     depends_on:
-      # - mysql
       mysql:
         condition: service_healthy
-
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
     networks:
       - airflow-network
@@ -60,7 +51,6 @@ services:
 
     volumes:
       - mysql_data:/var/lib/mysql
-      # - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     networks:
       - airflow-network

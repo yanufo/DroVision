@@ -1,4 +1,4 @@
-from sql_tool.connection import get_connection
+from src.sql_tool.connection import get_connection
 
 
 def get_all_reports():

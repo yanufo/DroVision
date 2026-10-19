@@ -3,7 +3,7 @@ import os
 
 import streamlit as st
 import streamlit.components.v1 as components
-from sql_tool.queries import get_report_by_id, get_solar_report_by_id
+from src.sql_tool.queries import get_report_by_id, get_solar_report_by_id
 
 
 def format_mmss(seconds: int) -> str:

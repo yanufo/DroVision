@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir nuitka
 # =========================
 
 RUN mkdir -p /build/compiled/ui
-RUN mkdir -p /build/compiled/sql_tool
+RUN mkdir -p /build/compiled/src/sql_tool
 RUN mkdir -p /build/compiled/src/services
 
 
@@ -71,13 +71,13 @@ RUN python -m nuitka \
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/sql_tool \
-    sql_tool/connection.py
+    --output-dir=/build/compiled/src/sql_tool \
+    src/sql_tool/connection.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/sql_tool \
-    sql_tool/queries.py
+    --output-dir=/build/compiled/src/sql_tool \
+    src/sql_tool/queries.py
 
 
 # -------------------------
@@ -154,9 +154,9 @@ COPY --from=builder /build/compiled/ui/ /app/ui/
 # Compiled SQL modules (protected)
 # =========================
 
-RUN mkdir -p /app/sql_tool
+RUN mkdir -p /app/src/sql_tool
 
-COPY --from=builder /build/compiled/sql_tool/ /app/sql_tool/
+COPY --from=builder /build/compiled/src/sql_tool/ /app/src/sql_tool/
 
 
 # =========================
@@ -172,9 +172,9 @@ COPY --from=builder /build/compiled/src/services/ /app/src/services/
 # Package markers
 # =========================
 
-RUN touch /app/ui/__init__.py
-RUN touch /app/sql_tool/__init__.py
 RUN touch /app/src/__init__.py
+RUN touch /app/ui/__init__.py
+RUN touch /app/src/sql_tool/__init__.py
 RUN touch /app/src/services/__init__.py
 
 

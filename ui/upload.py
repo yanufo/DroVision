@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import streamlit as st
 import yaml
 
-from sql_tool.queries import (
+from src.sql_tool.queries import (
     create_solar_report,
     has_duplicate_solar_report,
     has_processing_report,

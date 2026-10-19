@@ -89,12 +89,19 @@ RUN python -m nuitka \
     --output-dir=/build/compiled/src/services \
     src/services/report_service.py
 
+# =========================
+# MySQL stage
+# =========================
+FROM mysql:8.0 AS mysql-db
+
+COPY ./database/init.sql /docker-entrypoint-initdb.d/init.sql
+
 
 # =========================
-# Runtime stage
+# Runtime app stage
 # =========================
 
-FROM python:3.12.3-slim
+FROM python:3.12.3-slim AS app
 
 WORKDIR /app
 

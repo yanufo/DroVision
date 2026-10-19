@@ -7,14 +7,14 @@ LOGO_FULL = "assets/images/ST_logo_full.png"
 st.logo(LOGO_FULL, icon_image=LOGO_ICON)
 
 st.set_page_config(
-    page_title="App Prototype",
+    page_title="DroVision",
     page_icon="🛩️",
     layout="wide",
 )
 
 # App's version number
 __version__ = "0.1.0"
-st.sidebar.caption(f"Prototype v{__version__}")
+st.sidebar.caption(f"Version {__version__}")
 
 
 home = st.Page(

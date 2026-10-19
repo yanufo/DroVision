@@ -26,7 +26,9 @@ services:
       - AIRFLOW_API_PASSWORD=airflow
 
     depends_on:
-      - mysql
+      # - mysql
+      mysql:
+        condition: service_healthy
 
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -49,6 +51,12 @@ services:
 
     ports:
       - "3307:3306"
+
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$${MYSQL_ROOT_PASSWORD}\" mysql -h 127.0.0.1 -u root -e 'SELECT 1' --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
 
     volumes:
       - mysql_data:/var/lib/mysql

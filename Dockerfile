@@ -207,4 +207,5 @@ HEALTHCHECK \
     --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
-ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# ENTRYPOINT ["/wait-for-mysql.sh", "streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

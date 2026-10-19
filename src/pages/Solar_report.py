@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from src.sql_tool.queries import get_all_solar_reports
-from ui.ui_tools import (
+from src.ui.ui_tools import (
     render_solar_filter,
     filter_solar_reports,
     display_solar_table

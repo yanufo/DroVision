@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 
-from ui.drone_model import display_3d_drone
-from ui.upload import show_new_report
-from ui.usagi_model import display_3d_usagi
-from ui.drone_model import display_3d_drone
+from src.ui.drone_model import display_3d_drone
+from src.ui.upload import show_new_report
+from src.ui.usagi_model import display_3d_usagi
+from src.ui.drone_model import display_3d_drone
 
 # ============================================================
 # Hide Streamlit Deploy button

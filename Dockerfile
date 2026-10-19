@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir nuitka
 # Compile application modules (protected source code)
 # =========================
 
-RUN mkdir -p /build/compiled/ui
+RUN mkdir -p /build/compiled/src/ui
 RUN mkdir -p /build/compiled/src/sql_tool
 RUN mkdir -p /build/compiled/src/services
 
@@ -36,33 +36,33 @@ RUN mkdir -p /build/compiled/src/services
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/upload.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/upload.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/download.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/download.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/ui_tools.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/ui_tools.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/preview.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/preview.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/drone_model.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/drone_model.py
 
 RUN python -m nuitka \
     --module \
-    --output-dir=/build/compiled/ui \
-    ui/usagi_model.py
+    --output-dir=/build/compiled/src/ui \
+    src/ui/usagi_model.py
 
 
 # -------------------------
@@ -145,9 +145,9 @@ COPY --from=builder /build/.streamlit /app/.streamlit
 # Compiled UI modules (protected)
 # =========================
 
-RUN mkdir -p /app/ui
+RUN mkdir -p /app/src/ui
 
-COPY --from=builder /build/compiled/ui/ /app/ui/
+COPY --from=builder /build/compiled/src/ui/ /app/src/ui/
 
 
 # =========================
@@ -173,7 +173,7 @@ COPY --from=builder /build/compiled/src/services/ /app/src/services/
 # =========================
 
 RUN touch /app/src/__init__.py
-RUN touch /app/ui/__init__.py
+RUN touch /app/src/ui/__init__.py
 RUN touch /app/src/sql_tool/__init__.py
 RUN touch /app/src/services/__init__.py
 

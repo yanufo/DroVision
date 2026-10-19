@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 from src.sql_tool.queries import get_all_reports, get_all_solar_dag_run_id,get_reports_status_by_ids,get_report_by_id,get_all_dag_run_id,get_all_filename,delete_from_database,get_all_solar_filename,delete_from_solar_database,get_solar_report_by_id,get_solar_reports_status_by_ids
-from ui.preview import preview_dialog, preview_dialog_solar
+from src.ui.preview import preview_dialog, preview_dialog_solar
 from pathlib import Path
 import requests
-from ui.download import download_dialog, download_dialog_solar
+from src.ui.download import download_dialog, download_dialog_solar
 
 # region Global Constants 
 STATUS_COLORS = {

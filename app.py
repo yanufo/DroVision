@@ -1,8 +1,18 @@
 import streamlit as st
 
-LOGO_ICON = "assets/images/ST_logo_icon.png"
-LOGO_FULL = "assets/images/ST_logo_full.png"
+is_dark = st.context.theme.type == "dark"
 
+LOGO_FULL = (
+    "assets/images/logo_full_dark.png"
+    if is_dark
+    else "assets/images/logo_full_light.png"
+)
+
+LOGO_ICON = (
+    "assets/images/logo_icon_dark.png"
+    if is_dark
+    else "assets/images/logo_icon_light.png"
+)
 
 st.logo(LOGO_FULL, icon_image=LOGO_ICON)
 
